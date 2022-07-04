@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useRef } from 'react';
-import { Animated, Pressable, View } from 'react-native';
+import { Animated, Pressable, StyleSheet, View } from 'react-native';
 import Sound from 'react-native-sound';
 
 type Props = {
@@ -37,7 +37,7 @@ const Box: FunctionComponent<Props> = ({ color, index, pressable, blink, onClick
             if (error) {
                 console.log('failed to load the sound', error);
             } else {
-                sound.play(); 
+                sound.play();
             }
         });
         Animated.timing(
@@ -63,10 +63,22 @@ const Box: FunctionComponent<Props> = ({ color, index, pressable, blink, onClick
     }
 
     return (
-        <Pressable style={{ height: '50%', width: '50%' }} onPress={boxClicked}>
-            <Animated.View style={{ backgroundColor: color, flex: 1, opacity: fadeAnim }} />
+        <Pressable style={{ height: 150, width: 150 }} onPress={boxClicked}>
+            <Animated.View style={[styles.container,{ backgroundColor: color, opacity: fadeAnim }]} />
         </Pressable>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        borderRadius: 10,
+        padding: 20,
+        margin: 10,
+        borderColor:'white',
+        borderWidth:5
+    }
+})
+
 
 export default Box;

@@ -5,12 +5,12 @@ export const generateRandomColor = (): string => {
     return COLORS[randomNum];
 }
 
-export const fillColorsArray = (score: number): string[] => {
+export const fillColorsArray = (score: number, lastColor: string): string[] => {
     const tmpColors: any[] = [];
     let randomColor = generateRandomColor();
 
     for (let i = 0; i < score + 1; i++) {
-        while (randomColor === tmpColors[tmpColors.length - 1]) {
+        while (randomColor === tmpColors[tmpColors.length - 1] || randomColor === lastColor) {
             randomColor = generateRandomColor();
         }
         tmpColors.push(randomColor);
