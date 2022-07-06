@@ -2,86 +2,87 @@ import { NavigationContainerRef } from '@react-navigation/native';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Button, Text, View } from 'react-native';
 import { Box } from '../components';
-import { COLORS, fillColorsArray } from '../services/colors';
+import { COLORS, fillColorsArray, generateRandomColor } from '../services/colors';
 
 
 const GameScreen: FunctionComponent<{ navigation: NavigationContainerRef }> = ({ navigation }) => {
     const [score, setScore] = useState<number>(0);
 
-    const [chosenColors, setChosenColors] = useState<any[]>([]);
     const [colorToBlink, setColorToBlink] = useState<string>();
-    const [lastColor, setLastColor] = useState<string>('');
-
+    const [colorsArray, setColorsArray] = useState<string[]>([]);
+    const [selectedColor, setSelectedColor] = useState<string | undefined>(undefined);
     const colors: string[] = COLORS;
 
     const [pressable, setPressable] = useState<boolean>(false);
+    const [clickCounter, setClickCounter] = useState<number>(0);
 
     useEffect(() => {
         setScore(0);
-    }, [])
+        setColorsArray([]);
+    }, []);
 
-    useEffect(() => {
+    const startInterval = (arr: any[]) => {
         let index = 0;
 
         let interval = setInterval(() => {
-            // if array is empty clear interval.
-            if (chosenColors.length == 0) {
-                clearInterval(interval);
-                return;
-            }
+            console.log("interval", arr[index]);
+
+            setColorToBlink(arr[index]);
+            console.log(index);
+
             index++;
 
-            setColorToBlink(chosenColors[index - 1]);
-
-            if (index == chosenColors.length) {
+            if (index == arr.length) {
                 clearInterval(interval);
                 setPressable(true);
             }
+            setColorToBlink(undefined)
         }, 1000);
-
-        if (chosenColors.length == 0) {
-            setPressable(false);
-        }
-
-        return () => clearInterval(interval)
-
-    }, [chosenColors]);
-
-    const startButton = (): void => {
-        setScore(score + 1);
-        const arr = fillColorsArray(score,lastColor);
-        setChosenColors(arr);
     }
 
-    const boxClicked = (color: string) => {
+    const startButton = (): void => {
+        setClickCounter(0);
+        const color = generateRandomColor();
+        const newArr = [...colorsArray, color];
+        setColorsArray(newArr);
+        startInterval(newArr);
+    }
 
-        if (color === chosenColors[0]) {
-            // slice chosen color
-            const newArr = [...chosenColors].slice(1, chosenColors.length);
-            // update state
-            setChosenColors(newArr);
-            // dont let last color to be the first in new array.
-            if (newArr.length == 1) setLastColor(newArr[0]);
-            // start with new colors
-            if (newArr.length == 0) {
-                // give some delay .
-                setTimeout(() => {
-                    startButton();
-                }, 500);
+    useEffect(() => {
+        if (selectedColor !== undefined && clickCounter) {
+            if (selectedColor === colorsArray[clickCounter -1]) {
+                if (score == 0) {
+                    setScore(1);
+                }
+                console.log('success');
+                console.log("clickCounter", clickCounter);
+
+                if (colorsArray.length == clickCounter) {
+                    // give some delay.
+                    setTimeout(() => {
+                        startButton();
+                    }, 1000);
+                    setScore(score + 1);
+                }
+            } else {
+                // navigate to results & reset score.
+                navigation.navigate('Results', { score: score });
+                setScore(0);
+                setPressable(false);
             }
-
-        } else {
-            // navigate to results & reset score.
-            navigation.navigate('Results', { score: score });
-            setScore(0);
-            setPressable(false);
         }
+    }, [clickCounter, selectedColor]);
+
+
+    const boxClicked = (color: string) => {
+        setSelectedColor(color);
+        setClickCounter(clickCounter + 1);
     }
 
     return (
         <View style={{ flex: 1, flexDirection: 'column' }}>
             <View style={{ alignSelf: 'center', alignItems: 'center', padding: 20 }}>
-                <Button title='Start' onPress={startButton} disabled={score !== 0} />
+                <Button title='Start' onPress={startButton} disabled={colorsArray.length !== 0} />
                 <Text style={{ marginTop: 10 }}>Score: {score}</Text>
             </View>
             <View style={{ flex: 1, flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'center' }}>

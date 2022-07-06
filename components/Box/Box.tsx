@@ -63,7 +63,7 @@ const Box: FunctionComponent<Props> = ({ color, index, pressable, blink, onClick
     }
 
     return (
-        <Pressable style={{ height: 150, width: 150 }} onPress={boxClicked}>
+        <Pressable style={{ height: 200, width:'50%'  }} onPress={boxClicked}>
             <Animated.View style={[styles.container,{ backgroundColor: color, opacity: fadeAnim }]} />
         </Pressable>
     )
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 20,
         margin: 10,
-        borderColor:'white',
+        borderColor:'smokewhite',
         borderWidth:5
     }
 })

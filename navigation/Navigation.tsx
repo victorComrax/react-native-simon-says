@@ -9,7 +9,7 @@ import ResultsScreen from '../screens/Results';
 
 const Stack = createStackNavigator();
 
-const RouterNavigation: FunctionComponent = () => {
+const Navigation: FunctionComponent = () => {
     return (
 
         <View style={{ flex: 1 }}>
@@ -24,4 +24,4 @@ const RouterNavigation: FunctionComponent = () => {
     )
 }
 
-export default RouterNavigation;
+export default Navigation;
