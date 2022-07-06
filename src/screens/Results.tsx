@@ -5,8 +5,8 @@ import { Alert, Button, Modal, Pressable, StyleSheet, Text, TextInput } from 're
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Table from '../components/Table/Table';
-import { addScore } from '../store/slices/scoresSlice';
-import { RootState } from '../store/store';
+import { addScore } from '../src/store/slices/scoresSlice';
+import { RootState } from '../src/store/store';
 
 
 const ResultsScreen: FunctionComponent<{ navigation: NavigationContainerRef, route: RouteProp<{ params: { score: number } }, 'params'> }> = ({ navigation, route }) => {

@@ -46,26 +46,24 @@ const GameScreen: FunctionComponent<{ navigation: NavigationContainerRef }> = ({
     }
 
     useEffect(() => {
-        if (selectedColor !== undefined && clickCounter) {
-            if (selectedColor === colorsArray[clickCounter -1]) {
-                if (score == 0) {
-                    setScore(1);
-                }
-
-                if (colorsArray.length == clickCounter) {
-                    // give some delay.
-                    setTimeout(() => {
-                        startButton();
-                    }, 1000);
-                    setScore(score + 1);
-                }
-            } else {
-                // navigate to results & reset score.
-                navigation.navigate('Results', { score: score });
-                setScore(0);
-                setPressable(false);
-            }
+        if (selectedColor == undefined && !clickCounter) {
+            return;
         }
+        if (selectedColor === colorsArray[clickCounter - 1]) {
+            if (colorsArray.length == clickCounter) {
+                // give some delay.
+                setTimeout(() => {
+                    startButton();
+                }, 1000);
+                setScore(score + 1);
+            }
+        } else {
+            // navigate to results & reset score.
+            navigation.navigate('Results', { score: score });
+            setScore(0);
+            setPressable(false);
+        }
+
     }, [clickCounter, selectedColor]);
 
 

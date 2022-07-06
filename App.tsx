@@ -10,8 +10,8 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 
-import Navigation from './navigation/Navigation';
-import { persistor, store } from './store/store'
+import Navigation from './src/navigation/Navigation';
+import { persistor, store } from './src/store/store'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react';
 
