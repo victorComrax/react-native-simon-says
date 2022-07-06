@@ -2,7 +2,7 @@ import { NavigationContainerRef } from '@react-navigation/native';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Button, Text, View } from 'react-native';
 import { Box } from '../components';
-import { COLORS, fillColorsArray, generateRandomColor } from '../services/colors';
+import { COLORS, generateRandomColor } from '../services/colors';
 
 
 const GameScreen: FunctionComponent<{ navigation: NavigationContainerRef }> = ({ navigation }) => {
