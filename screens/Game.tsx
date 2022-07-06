@@ -25,10 +25,7 @@ const GameScreen: FunctionComponent<{ navigation: NavigationContainerRef }> = ({
         let index = 0;
 
         let interval = setInterval(() => {
-            console.log("interval", arr[index]);
-
             setColorToBlink(arr[index]);
-            console.log(index);
 
             index++;
 
@@ -54,8 +51,6 @@ const GameScreen: FunctionComponent<{ navigation: NavigationContainerRef }> = ({
                 if (score == 0) {
                     setScore(1);
                 }
-                console.log('success');
-                console.log("clickCounter", clickCounter);
 
                 if (colorsArray.length == clickCounter) {
                     // give some delay.
